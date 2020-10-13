@@ -103,7 +103,8 @@
 						<Bundle-Description>${urcap.description}</Bundle-Description>
 						<!--***************************************************************-->
 						<Import-Package>com.ur.urcap.api*,
-							*</Import-Package>
+							*,com.ur.style*;version="[1.0)"</Import-Package>
+							<Embed-Dependency>StyleGuide;scope=compile|runtime</Embed-Dependency>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -142,6 +143,12 @@
 			<artifactId>api</artifactId>
 			<version>1.8.0</version>
 			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+    		<groupId>com.ur</groupId>
+			<artifactId>StyleGuide</artifactId>
+    		<version>1.0</version>
 		</dependency>
 
 		<!-- test dependencies -->
