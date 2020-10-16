@@ -10,6 +10,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -26,6 +27,7 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.ur.style.URColorPalette;
 import com.ur.style.URIcon;
 import com.ur.style.URSpacingSize;
 import com.ur.style.components.URButtons;
@@ -38,15 +40,20 @@ import com.ur.urcap.api.contribution.toolbar.swing.SwingToolbarContribution;
 public class IOToolbarNodeContribution implements SwingToolbarContribution {
 
 	private JLabel label = new JLabel();
+	private RTDEConnection connection;
 	
 	private static final String IMAGEPATH_SELECTED = "/image/onButton.png";
 	private static final String IMAGEPATH_DESELECTED = "/image/offButton.png";
+	
+	private HashMap<Integer, JButton> IO_to_buttons = new HashMap<Integer, JButton>();
+	private HashMap<Integer, JToggleButton> IO_to_toggle = new HashMap<Integer, JToggleButton>();
 	
 
 	private URSpacing urSpacing = new URSpacing();
 	private URButtons urButtons = new URButtons();
 	private URToggles urToggles = new URToggles();
 	private URTextFields urTextFields = new URTextFields();
+	private URColorPalette urColorPalette = new URColorPalette();
 
 	private JButton buttonInput_1 = urButtons.getSmallButtonEnabled("OFF", 100);
 	private JButton buttonInput_2 = urButtons.getSmallButtonEnabled("OFF", 100);
@@ -59,7 +66,22 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 	JToggleButton toggleButton_4 = urToggles.getSmallToggleDeselected(80);
 	
 	public IOToolbarNodeContribution(ToolbarContext context) {
-		// TODO Auto-generated constructor stub
+		connection = new RTDEConnection();
+		
+		
+		
+	}
+	
+	private void addToMaps() {
+		IO_to_buttons.put(64, buttonInput_1);
+		IO_to_buttons.put(65, buttonInput_2);
+		IO_to_buttons.put(66, buttonInput_3);
+		IO_to_buttons.put(67, buttonInput_4);
+		
+		IO_to_toggle.put(64, toggleButton_1);
+		IO_to_toggle.put(65, toggleButton_2);
+		IO_to_toggle.put(66, toggleButton_3);
+		IO_to_toggle.put(67, toggleButton_4);
 	}
 
 	@Override
@@ -80,20 +102,20 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 		
 		jPanel.add(createPairIOButtons(createTextField("Input 67: "),toggleButton_4, buttonInput_4));
 		
-		this.selectedToggle();
-		this.pressedButton();
+		this.setupToggleHandler();
+		this.setupButtonHandler();
+		this.addToMaps();
 
 	}
 
 	@Override
 	public void openView() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void closeView() {
-		// TODO Auto-generated method stub
+		connection.disconnectClient();
 
 	}
 	
@@ -133,15 +155,15 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 	/**
 	 * Add itemlistener to all four togglebuttons.
 	 */
-	private void selectedToggle() {
+	private void setupToggleHandler() {
 		
-		toggleButton_1.addItemListener(createItemlistener(toggleButton_1,1));
+		toggleButton_1.addItemListener(togglelistener(toggleButton_1,64));
 		
-		toggleButton_2.addItemListener(createItemlistener(toggleButton_2,2));
+		toggleButton_2.addItemListener(togglelistener(toggleButton_2,65));
 		
-		toggleButton_3.addItemListener(createItemlistener(toggleButton_3,3));
+		toggleButton_3.addItemListener(togglelistener(toggleButton_3,66));
 		
-		toggleButton_4.addItemListener(createItemlistener(toggleButton_4,4));
+		toggleButton_4.addItemListener(togglelistener(toggleButton_4,67));
 
 	}
 	
@@ -150,7 +172,7 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 	 * @param togglebutton
 	 * @return
 	 */
-	private ItemListener createItemlistener(final JToggleButton togglebutton, int IONumber) {
+	private ItemListener togglelistener(final JToggleButton togglebutton, final int IONumber) {
 		ItemListener itemListener = new ItemListener() {
 			
 			@Override
@@ -159,11 +181,11 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 				int state = e.getStateChange();
 				
 				if(state == e.SELECTED) {
-					System.out.println("SELECTED");
-					togglebutton.setIcon(createImageIcon(IMAGEPATH_SELECTED));
+					changeIOstate(IONumber, true);
+					connection.sendInput(IONumber, true);
 				}else {
-					System.out.println("DESELECTED");
-					togglebutton.setIcon(createImageIcon(IMAGEPATH_DESELECTED));
+					changeIOstate(IONumber, false);
+					connection.sendInput(IONumber, false);
 				}
 				
 			}
@@ -175,12 +197,12 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 	/**
 	 * A method for handling pressed buttons.
 	 */
-	private void pressedButton() {
+	private void setupButtonHandler() {
 		
-		this.createChangeListener(buttonInput_1, 1);
-		this.createChangeListener(buttonInput_2, 2);
-		this.createChangeListener(buttonInput_3, 3);
-		this.createChangeListener(buttonInput_4, 4);
+		this.createChangeListener(buttonInput_1, 64);
+		this.createChangeListener(buttonInput_2, 65);
+		this.createChangeListener(buttonInput_3, 66);
+		this.createChangeListener(buttonInput_4, 67);
 		
 	}
 	
@@ -198,17 +220,33 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 				ButtonModel model = (ButtonModel) e.getSource();
 
 				if (model.isPressed()) {
-					button.setText("ON");
+					changeIOstate(IONumber, true);
+					connection.sendInput(IONumber, true);
+					
 				}
 				if (!model.isPressed()) {
-					button.setText("OFF");
+					changeIOstate(IONumber, false);
+					connection.sendInput(IONumber, false);
 				}
 
 			}
 		});
 	}
 
-
+	private void changeIOstate(int IONumber, boolean state) {
+		if (state) {
+			IO_to_buttons.get(IONumber).getModel().setPressed(true);
+			IO_to_buttons.get(IONumber).setText("ON");
+			IO_to_buttons.get(IONumber).setBackground(urColorPalette.GRAY_3);
+			IO_to_toggle.get(IONumber).setIcon(createImageIcon(IMAGEPATH_SELECTED));
+			
+		} else {
+			IO_to_buttons.get(IONumber).setText("OFF");
+			IO_to_buttons.get(IONumber).getModel().setPressed(false);
+			IO_to_buttons.get(IONumber).setBackground(urColorPalette.WHITE);
+			IO_to_toggle.get(IONumber).setIcon(createImageIcon(IMAGEPATH_DESELECTED));
+		}
+	}
 
 	
 	private ImageIcon createImageIcon(String path) {

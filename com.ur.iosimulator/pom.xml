@@ -269,7 +269,7 @@
 				</plugins>
 			</build>
 		</profile>
-		<profile>
+		<profile> 
 			<id>ursimvm</id>
 			<build>
 				<plugins>
