@@ -103,8 +103,8 @@
 						<Bundle-Description>${urcap.description}</Bundle-Description>
 						<!--***************************************************************-->
 						<Import-Package>com.ur.urcap.api*,
-							*,com.ur.style*;version="[1.0)"</Import-Package>
-							<Embed-Dependency>StyleGuide;scope=compile|runtime</Embed-Dependency>
+							*,com.ur.style*;version="[1.0)",com.github.o5h.skynet.ur.rtde*;version="[1.0)",org.slf4j*,org.slf4j.impl*</Import-Package>
+							<Embed-Dependency>StyleGuide;scope=compile|runtime,skynet-ur-rtde;scope=compile|runtime,slf4j-api;scope=compile|runtime,skynet-sl4j;scope=compile|runtime</Embed-Dependency>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -150,6 +150,24 @@
 			<artifactId>StyleGuide</artifactId>
     		<version>1.0</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.github.o5h.skynet</groupId>
+			<artifactId>skynet-ur-rtde</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>com.github.o5h.skynet</groupId>
+            <artifactId>skynet-sl4j</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+		
+		<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.26</version>
+        </dependency>
 
 		<!-- test dependencies -->
 		<dependency>

@@ -30,6 +30,7 @@ import com.ur.style.URIcon;
 import com.ur.style.URSpacingSize;
 import com.ur.style.components.URButtons;
 import com.ur.style.components.URSpacing;
+import com.ur.style.components.URTextFields;
 import com.ur.style.components.URToggles;
 import com.ur.urcap.api.contribution.toolbar.ToolbarContext;
 import com.ur.urcap.api.contribution.toolbar.swing.SwingToolbarContribution;
@@ -38,22 +39,24 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 
 	private JLabel label = new JLabel();
 	
-	private static final String IMAGEPATH_SELECTED = "/image/G5_radio_button_selected_enabled.png";
-	private static final String IMAGEPATH_DESELECTED = "/image/G5_radio_button_deselected_enabled.png";
+	private static final String IMAGEPATH_SELECTED = "/image/onButton.png";
+	private static final String IMAGEPATH_DESELECTED = "/image/offButton.png";
+	
 
 	private URSpacing urSpacing = new URSpacing();
 	private URButtons urButtons = new URButtons();
 	private URToggles urToggles = new URToggles();
+	private URTextFields urTextFields = new URTextFields();
 
-	private JButton buttonIO_1 = urButtons.getSmallButtonEnabled("IO:1 OFF", 100);
-	private JButton buttonIO_2 = urButtons.getSmallButtonEnabled("IO:2 OFF", 100);
-	private JButton buttonIO_3 = urButtons.getSmallButtonEnabled("IO:3 OFF", 100);
-	private JButton buttonIO_4 = urButtons.getSmallButtonEnabled("IO:4 OFF", 100);
+	private JButton buttonInput_1 = urButtons.getSmallButtonEnabled("OFF", 100);
+	private JButton buttonInput_2 = urButtons.getSmallButtonEnabled("OFF", 100);
+	private JButton buttonInput_3 = urButtons.getSmallButtonEnabled("OFF", 100);
+	private JButton buttonInput_4 = urButtons.getSmallButtonEnabled("OFF", 100);
 	
-	JToggleButton toggleButton_1 = urToggles.getSmallToggleSelected(50);
-	JToggleButton toggleButton_2 = urToggles.getSmallToggleDeselected(50);
-	JToggleButton toggleButton_3 = urToggles.getSmallToggleDeselected(50);
-	JToggleButton toggleButton_4 = urToggles.getSmallToggleDeselected(50);
+	JToggleButton toggleButton_1 = urToggles.getSmallToggleSelected(80);
+	JToggleButton toggleButton_2 = urToggles.getSmallToggleDeselected(80);
+	JToggleButton toggleButton_3 = urToggles.getSmallToggleDeselected(80);
+	JToggleButton toggleButton_4 = urToggles.getSmallToggleDeselected(80);
 	
 	public IOToolbarNodeContribution(ToolbarContext context) {
 		// TODO Auto-generated constructor stub
@@ -63,19 +66,19 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 	public void buildUI(JPanel jPanel) {
 		jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
 
-		jPanel.add(createPairIOButtons(toggleButton_1, buttonIO_1));
+		jPanel.add(createPairIOButtons(createTextField("Input 64: "),toggleButton_1, buttonInput_1));
 		
 		jPanel.add(urSpacing.createVerticalSpacing(URSpacingSize.XLARGE_VERTICAL_SPACING));
 		
-		jPanel.add(createPairIOButtons(toggleButton_2, buttonIO_2));
+		jPanel.add(createPairIOButtons(createTextField("Input 65: "),toggleButton_2, buttonInput_2));
 		
 		jPanel.add(urSpacing.createVerticalSpacing(URSpacingSize.XLARGE_VERTICAL_SPACING));
 		
-		jPanel.add(createPairIOButtons(toggleButton_3, buttonIO_3));
+		jPanel.add(createPairIOButtons(createTextField("Input 66: "),toggleButton_3, buttonInput_3));
 		
 		jPanel.add(urSpacing.createVerticalSpacing(URSpacingSize.XLARGE_VERTICAL_SPACING));
 		
-		jPanel.add(createPairIOButtons(toggleButton_4, buttonIO_4));
+		jPanel.add(createPairIOButtons(createTextField("Input 67: "),toggleButton_4, buttonInput_4));
 		
 		this.selectedToggle();
 		this.pressedButton();
@@ -94,6 +97,12 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 
 	}
 	
+	private JTextField createTextField(String text) {
+		JTextField textField = urTextFields.getTextFieldEnabled(100);
+		textField.setText(text);
+		return textField;
+	}
+	
 	
 	/**
 	 * Creating a box with a pair og togglebutton and button.
@@ -101,15 +110,17 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 	 * @param button
 	 * @return
 	 */
-	private Box createPairIOButtons(JToggleButton togglebutton, JButton button) {
+	private Box createPairIOButtons(JTextField textfield ,JToggleButton togglebutton, JButton button) {
 		Box box = Box.createHorizontalBox();
-		box.setAlignmentX(Component.LEFT_ALIGNMENT);
+		box.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		toggleButton_1.setIcon(createImageIcon(IMAGEPATH_DESELECTED));
 		toggleButton_2.setIcon(createImageIcon(IMAGEPATH_DESELECTED));
 		toggleButton_3.setIcon(createImageIcon(IMAGEPATH_DESELECTED));
 		toggleButton_4.setIcon(createImageIcon(IMAGEPATH_DESELECTED));
 		
+		box.add(textfield);
+		box.add(urSpacing.createHorizontalSpacing());
 		box.add(togglebutton);
 		box.add(urSpacing.createHorizontalSpacing());
 		box.add(button);
@@ -166,10 +177,10 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 	 */
 	private void pressedButton() {
 		
-		this.createChangeListener(buttonIO_1, 1);
-		this.createChangeListener(buttonIO_2, 2);
-		this.createChangeListener(buttonIO_3, 3);
-		this.createChangeListener(buttonIO_4, 4);
+		this.createChangeListener(buttonInput_1, 1);
+		this.createChangeListener(buttonInput_2, 2);
+		this.createChangeListener(buttonInput_3, 3);
+		this.createChangeListener(buttonInput_4, 4);
 		
 	}
 	
@@ -187,10 +198,10 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 				ButtonModel model = (ButtonModel) e.getSource();
 
 				if (model.isPressed()) {
-					button.setText("IO: "+ IONumber + " ON");
+					button.setText("ON");
 				}
 				if (!model.isPressed()) {
-					button.setText("IO: "+ IONumber + "  OFF");
+					button.setText("OFF");
 				}
 
 			}
