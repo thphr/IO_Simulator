@@ -1,13 +1,17 @@
 IO Simulator
 
-This URCap is made for simulating input registor [64...67]. Only works for e-series. Version >= 1.8.
-To run this program, clone the project or download it as a zip. Open the project in an IDE or just open a terminal and direct to the resource folder and then the library folder and install the jars by running the following maven commands:
+This URCap is made for simulating input register [64...67]. Only works for e-series. Version >= 1.8.
+To run this program, clone the project or download it as a zip. Open the project in an IDE or just open a terminal and direct to the resource folder and then the libraries folder and install the jars by running the following maven commands:
 
      mvn install:install-file -Dfile=skynet-ur-rtde-1.0-SNAPSHOT -DgroupId=com.github.o5h.skynet -DartifactId=skynet-ur-rtde -Dversion=1.0-SNAPSHOT -Dpackaging=jar
 
 and
 
      mvn install:install-file -Dfile=skynet-sl4j-1.0-SNAPSHOT -DgroupId=com.github.o5h.skynet -DartifactId=skynet-sl4j -Dversion=1.0-SNAPSHOT -Dpackaging=jar
+
+and
+
+     mvn install:install-file -Dfile=URStyleGuide.jar -DgroupId=com.ur -DartifactId=StyleGuide -Dversion=1.0 -Dpackaging=jar
 
 Now you can deploy the URCap to the URSim or UR robot like you used to.
 
