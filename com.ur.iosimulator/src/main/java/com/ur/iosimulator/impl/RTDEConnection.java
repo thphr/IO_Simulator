@@ -112,10 +112,8 @@ public class RTDEConnection {
 				countDownLatch.await();
 				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 		}
@@ -136,7 +134,6 @@ public class RTDEConnection {
 		try {
 			client.sendData(ids[0], currentValueState);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

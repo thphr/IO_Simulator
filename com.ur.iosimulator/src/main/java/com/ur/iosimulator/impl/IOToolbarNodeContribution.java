@@ -1,13 +1,8 @@
 package com.ur.iosimulator.impl;
 
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,20 +10,16 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.ur.style.URColorPalette;
-import com.ur.style.URIcon;
 import com.ur.style.URSpacingSize;
 import com.ur.style.components.URButtons;
 import com.ur.style.components.URSpacing;
@@ -39,7 +30,6 @@ import com.ur.urcap.api.contribution.toolbar.swing.SwingToolbarContribution;
 
 public class IOToolbarNodeContribution implements SwingToolbarContribution {
 
-	private JLabel label = new JLabel();
 	private RTDEConnection connection;
 	
 	private static final String IMAGEPATH_SELECTED = "/image/onButton.png";
@@ -115,7 +105,6 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 
 	@Override
 	public void closeView() {
-		connection.disconnectClient();
 
 	}
 	
@@ -235,14 +224,14 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 
 	private void changeIOstate(int IONumber, boolean state) {
 		if (state) {
-			IO_to_buttons.get(IONumber).getModel().setPressed(true);
+//			IO_to_buttons.get(IONumber).getModel().setPressed(true);
 			IO_to_buttons.get(IONumber).setText("ON");
 			IO_to_buttons.get(IONumber).setBackground(urColorPalette.GRAY_3);
 			IO_to_toggle.get(IONumber).setIcon(createImageIcon(IMAGEPATH_SELECTED));
 			
 		} else {
 			IO_to_buttons.get(IONumber).setText("OFF");
-			IO_to_buttons.get(IONumber).getModel().setPressed(false);
+//			IO_to_buttons.get(IONumber).getModel().setPressed(false);
 			IO_to_buttons.get(IONumber).setBackground(urColorPalette.WHITE);
 			IO_to_toggle.get(IONumber).setIcon(createImageIcon(IMAGEPATH_DESELECTED));
 		}
