@@ -17,10 +17,10 @@
 		<!--********************************************************************-->
 		<!--******************* BEGINNING OF URCAP META DATA *******************-->
 		<urcap.symbolicname>com.ur.iosimulator</urcap.symbolicname>
-		<urcap.vendor>URCaps R us Inc.</urcap.vendor>
-		<urcap.contactAddress>123 URCap Street</urcap.contactAddress>
-		<urcap.copyright>Copyright notice (C)</urcap.copyright>
-		<urcap.description>This is a description of the URCap</urcap.description>
+		<urcap.vendor>UR+</urcap.vendor>
+		<urcap.contactAddress>Energivej 25, 5260 Odense S</urcap.contactAddress>
+		<urcap.copyright>Property of Universal Robots</urcap.copyright>
+		<urcap.description>This URCap is used to simulate boolean input register 64 to 67.</urcap.description>
 		<urcap.licenseType>License type</urcap.licenseType>
 		<!--********************** END OF URCAP META DATA **********************-->
 		<!--********************************************************************-->
