@@ -4,7 +4,6 @@ import com.ur.urcap.api.contribution.InstallationNodeContribution;
 import com.ur.urcap.api.contribution.installation.CreationContext;
 import com.ur.urcap.api.contribution.installation.InstallationAPIProvider;
 import com.ur.urcap.api.domain.InstallationAPI;
-import com.ur.urcap.api.domain.URCapAPI;
 import com.ur.urcap.api.domain.data.DataModel;
 import com.ur.urcap.api.domain.function.FunctionException;
 import com.ur.urcap.api.domain.function.FunctionModel;
@@ -24,7 +23,7 @@ public class InputFunctionInstallationNodeContribution implements InstallationNo
 	
 	
 	private void addScriptFunctions() {
-		addToFunctionModel(getMethodName("X"), "input");
+		addToFunctionModel(getMethodName("x"), "input");
 		addToFunctionModel(getMethodName("64"));
 		addToFunctionModel(getMethodName("65"));
 		addToFunctionModel(getMethodName("66"));
@@ -79,7 +78,7 @@ public class InputFunctionInstallationNodeContribution implements InstallationNo
 		writer.appendLine("return read_input_boolean_register(67)");
 		writer.end();
 		
-		writer.appendLine("def get_simulated_input(input):");
+		writer.appendLine("def get_simulated_input_x(input):");
 		writer.appendLine("return read_input_boolean_register(input)");
 		writer.end();
 
