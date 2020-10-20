@@ -13,31 +13,26 @@ public class InputFunctionInstallationNodeService
 		implements SwingInstallationNodeService<InputFunctionInstallationNodeContribution, InputFunctionInstallationNodeView> {
 
 	public InputFunctionInstallationNodeService() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void configureContribution(ContributionConfiguration configuration) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		// TODO Auto-generated method stub
 		return "Input Simulator";
 	}
 
 	@Override
 	public InputFunctionInstallationNodeView createView(ViewAPIProvider apiProvider) {
-		// TODO Auto-generated method stub
 		return new InputFunctionInstallationNodeView(apiProvider);
 	}
 
 	@Override
 	public InputFunctionInstallationNodeContribution createInstallationNode(InstallationAPIProvider apiProvider,
 			InputFunctionInstallationNodeView view, DataModel model, CreationContext context) {
-		// TODO Auto-generated method stub
 		return new InputFunctionInstallationNodeContribution(apiProvider, view, model, context);
 	}
 

@@ -236,14 +236,12 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 
 	private void changeIOstate(int IONumber, boolean state) {
 		if (state) {
-//			IO_to_buttons.get(IONumber).getModel().setPressed(true);
 			IO_to_buttons.get(IONumber).setText("ON");
 			IO_to_buttons.get(IONumber).setBackground(urColorPalette.GRAY_3);
 			IO_to_toggle.get(IONumber).setIcon(createImageIcon(IMAGEPATH_SELECTED));
 			
 		} else {
 			IO_to_buttons.get(IONumber).setText("OFF");
-//			IO_to_buttons.get(IONumber).getModel().setPressed(false);
 			IO_to_buttons.get(IONumber).setBackground(urColorPalette.WHITE);
 			IO_to_toggle.get(IONumber).setIcon(createImageIcon(IMAGEPATH_DESELECTED));
 		}

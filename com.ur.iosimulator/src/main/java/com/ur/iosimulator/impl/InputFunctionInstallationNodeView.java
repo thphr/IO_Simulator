@@ -8,13 +8,10 @@ import com.ur.urcap.api.contribution.installation.swing.SwingInstallationNodeVie
 public class InputFunctionInstallationNodeView implements SwingInstallationNodeView<InputFunctionInstallationNodeContribution> {
 
 	public InputFunctionInstallationNodeView(ViewAPIProvider apiProvider) {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void buildUI(JPanel panel, InputFunctionInstallationNodeContribution contribution) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
