@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonModel;
@@ -16,9 +17,11 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.ur.style.URBorder;
 import com.ur.style.URColorPalette;
 import com.ur.style.URSpacingSize;
 import com.ur.style.components.URButtons;
@@ -44,6 +47,7 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 	private URToggles urToggles = new URToggles();
 	private URTextFields urTextFields = new URTextFields();
 	private URColorPalette urColorPalette = new URColorPalette();
+	private URBorder urBorder = new URBorder();
 
 	private JButton buttonInput_1 = urButtons.getSmallButtonEnabled("OFF", 100);
 	private JButton buttonInput_2 = urButtons.getSmallButtonEnabled("OFF", 100);
@@ -110,6 +114,8 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 	
 	private JTextField createTextField(String text) {
 		JTextField textField = urTextFields.getTextFieldEnabled(100);
+		Border border = BorderFactory.createLineBorder(urColorPalette.WHITE, urBorder.BORDER_THIN);
+		textField.setBorder(border);
 		textField.setText(text);
 		return textField;
 	}
@@ -124,6 +130,12 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 	private Box createPairIOButtons(JTextField textfield ,JToggleButton togglebutton, JButton button) {
 		Box box = Box.createHorizontalBox();
 		box.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		Border myToggleBorder = BorderFactory.createLineBorder(urColorPalette.WHITE, urBorder.BORDER_NORMAL);
+		toggleButton_1.setBorder(myToggleBorder);
+		toggleButton_2.setBorder(myToggleBorder);
+		toggleButton_3.setBorder(myToggleBorder);
+		toggleButton_4.setBorder(myToggleBorder);
 		
 		toggleButton_1.setIcon(createImageIcon(IMAGEPATH_DESELECTED));
 		toggleButton_2.setIcon(createImageIcon(IMAGEPATH_DESELECTED));
@@ -224,14 +236,12 @@ public class IOToolbarNodeContribution implements SwingToolbarContribution {
 
 	private void changeIOstate(int IONumber, boolean state) {
 		if (state) {
-//			IO_to_buttons.get(IONumber).getModel().setPressed(true);
 			IO_to_buttons.get(IONumber).setText("ON");
 			IO_to_buttons.get(IONumber).setBackground(urColorPalette.GRAY_3);
 			IO_to_toggle.get(IONumber).setIcon(createImageIcon(IMAGEPATH_SELECTED));
 			
 		} else {
 			IO_to_buttons.get(IONumber).setText("OFF");
-//			IO_to_buttons.get(IONumber).getModel().setPressed(false);
 			IO_to_buttons.get(IONumber).setBackground(urColorPalette.WHITE);
 			IO_to_toggle.get(IONumber).setIcon(createImageIcon(IMAGEPATH_DESELECTED));
 		}
